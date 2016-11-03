@@ -8,7 +8,7 @@ import glob
 
 # global variables
 speriod=(15*60)-1
-dbname='/var/www/templog.db'
+dbname='./templog.db'
 
 
 
@@ -56,8 +56,8 @@ def get_temp(devicefile):
     # is the status is ok, get the temperature from line 2
     if status=="YES":
         print status
-        tempstr= lines[1][-6:-1]
-        tempvalue=float(tempstr)/1000
+        tempstr=lines[1].split("=")
+        tempvalue=float(tempstr[1])/1000
         print tempvalue
         return tempvalue
     else:
@@ -98,8 +98,9 @@ def main():
         # Store the temperature in the database
     log_temperature(temperature)
 
-        # display the contents of the database
-#        display_data()
+    # display the contents of the database
+    # (for debugging)
+    # display_data()
 
 #        time.sleep(speriod)
 
