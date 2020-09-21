@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Temperature in our home</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.3.0/Chart.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="static/style.css">
+  </head>
+  <body>
+    <div class="wrapper">
+      <h1>Temperature Graph</h1>
+      <h2>Temperature outside the bedroom window</h2>
+
+      <canvas id="myChart" width="1600" height="900"></canvas>
+    </div>
+    <script>
+     var times = {{ time_data | safe }};
+     var temps = {{ temp_data | safe }};
+    </script>
+    <script src="static/script.js">
+   </script>
+  <br>
+  <h2>Temp min / max / avg in last 24 hours</h2>
+  <p>Min: {{ date_min }} - {{ min }}C</p>
+  <p>Max: {{ date_max }} - {{ max }}C</p>
+  <p>Avg: {{ avg }}C</p>
+  </body>
+</html>

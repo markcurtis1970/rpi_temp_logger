@@ -1,14 +1,16 @@
 #!/usr/bin/env python
 
-import sqlite3
+# Logs the temp to the SQLlite DB
 
+import sqlite3
 import os
 import time
 import glob
+import datetime
 
 # global variables
 speriod=(15*60)-1
-dbname='./templog.db'
+dbname='/home/pi/rpi_temp_logger/colchester.db'
 
 
 
@@ -55,10 +57,8 @@ def get_temp(devicefile):
 
     # is the status is ok, get the temperature from line 2
     if status=="YES":
-        print status
         tempstr=lines[1].split("=")
         tempvalue=float(tempstr[1])/1000
-        print tempvalue
         return tempvalue
     else:
         print "There was an error."
@@ -83,31 +83,17 @@ def main():
         w1devicefile = devicelist[0] + '/w1_slave'
 
 
-#    while True:
-
     # get the temperature from the device file
     temperature = get_temp(w1devicefile)
-    if temperature != None:
-        print "temperature="+str(temperature)
-    else:
+    if temperature is None:
         # Sometimes reads fail on the first attempt
         # so we need to retry
         temperature = get_temp(w1devicefile)
-        print "temperature="+str(temperature)
 
-        # Store the temperature in the database
+    # Store the temperature in the database
     log_temperature(temperature)
-
-    # display the contents of the database
-    # (for debugging)
-    # display_data()
-
-#        time.sleep(speriod)
 
 
 if __name__=="__main__":
     main()
-
-
-
 
