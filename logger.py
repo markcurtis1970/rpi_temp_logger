@@ -12,15 +12,17 @@ import datetime
 speriod=(15*60)-1
 dbname='/home/pi/rpi_temp_logger/colchester.db'
 
-
+# Timestamp must include local timezone
+def current_time():
+    ts = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    return ts
 
 # store the temperature in the database
 def log_temperature(temp):
 
     conn=sqlite3.connect(dbname)
     curs=conn.cursor()
-
-    curs.execute("INSERT INTO temps values(datetime('now'), (?))", (temp,))
+    curs.execute("INSERT INTO temps values( ?, ? )", (current_time(), temp))
 
     # commit the changes
     conn.commit()
